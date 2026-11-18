@@ -7,7 +7,7 @@
 
   const CONFIG = {
     apiBase: '/api',
-    siteKey: '0x4AAAAAAGFNBQDBZD3YP3JO9cNQfqkC2kc',
+    siteKey: '0x4AAAAAAGFNBZrXJTf5C2J5',
     cinematixGoUrl: 'https://watchcinematix.xyz/go',
     homeUrl: 'https://getstackdeals.xyz'
   };
