@@ -21,7 +21,7 @@
 
   const cfg = Object.assign({
     apiBase: '/api',
-    siteKey: '0x4AAAAAAGFNBQDBZD3YP3JO9cNQfqkC2kc', // Replace with your actual Turnstile Site Key
+    siteKey: '0x4AAAAAAGFNBZrXJTf5C2J5', // Replace with your actual Turnstile Site Key
     homeUrl: 'https://getstackdeals.xyz'
   }, window.StackDealsConfig || {});
 
