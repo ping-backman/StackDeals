@@ -13,14 +13,11 @@
     a { color: var(--primary); text-decoration: none; }
     a:hover { text-decoration: underline; }
     .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
-    
     header { background: var(--card); border-bottom: 1px solid var(--line); padding: 16px 0; }
     .nav-wrap { display: flex; justify-content: space-between; align-items: center; }
     .logo { font-size: 22px; font-weight: 800; color: var(--text); text-decoration: none; }
-    
     .layout { display: grid; grid-template-columns: 1fr 400px; gap: 40px; padding: 40px 0; }
     @media (max-width: 800px) { .layout { grid-template-columns: 1fr; } }
-    
     .campaign-info h1 { font-size: 32px; font-weight: 800; margin-bottom: 12px; }
     .prize-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius); padding: 20px; margin: 24px 0; }
     .prize-box h3 { color: var(--primary); font-size: 18px; margin-bottom: 8px; }
@@ -28,21 +25,22 @@
     .countdown-unit { background: var(--card); border: 1px solid var(--line); padding: 12px; border-radius: 8px; text-align: center; min-width: 70px; }
     .countdown-unit span { display: block; font-size: 24px; font-weight: 800; color: var(--text); }
     .countdown-unit small { font-size: 11px; color: var(--muted); text-transform: uppercase; }
-    
     .rules-list { margin: 24px 0; padding-left: 20px; color: var(--muted); }
     .rules-list li { margin-bottom: 8px; }
-    
     .widget-sticky { position: sticky; top: 100px; }
     .loading-state { text-align: center; padding: 60px 20px; color: var(--muted); }
+    .btn { display: inline-block; padding: 10px 20px; background: var(--primary); color: #fff; border-radius: 8px; font-size: 14px; font-weight: 700; text-decoration: none; }
+    .btn:hover { background: #1d4ed8; text-decoration: none; }
+    .custom-action-box { background: #f0fdf4; border: 1px solid #86efac; border-radius: var(--radius); padding: 20px; margin: 24px 0; }
+    .custom-action-box h3 { color: #166534; font-size: 18px; margin-bottom: 8px; }
+    .custom-action-box p { font-size: 15px; color: var(--text); margin-bottom: 12px; }
   </style>
 </head>
 <body>
   <header>
     <div class="container nav-wrap">
       <a href="/" class="logo">🎟️ StackDeals</a>
-      <nav>
-        <a href="/">Back to Home</a>
-      </nav>
+      <nav><a href="/">Back to Home</a></nav>
     </div>
   </header>
 
@@ -50,7 +48,6 @@
     <div id="loading" class="loading-state">Loading giveaway details...</div>
     
     <div id="content" class="layout" style="display: none;">
-      <!-- Left: Campaign Details -->
       <div class="campaign-info">
         <h1 id="c-title">Giveaway Title</h1>
         <p style="color: var(--muted); font-size: 16px;">Official entry page. No purchase necessary. Open to residents of US, UK, and CA (18+).</p>
@@ -61,6 +58,8 @@
           <p style="margin-top: 8px; font-size: 14px; color: var(--muted);"><span id="c-winners">1</span> winner(s) will be selected via a transparent, weighted random draw.</p>
         </div>
 
+        <div id="custom-action-box"></div>
+
         <h3>⏰ Time Remaining</h3>
         <div class="countdown-strip">
           <div class="countdown-unit"><span id="cd-d">00</span><small>Days</small></div>
@@ -70,18 +69,19 @@
         </div>
 
         <h3>📜 How to Enter & Win</h3>
-        <ul class="rules-list">
-          <li><strong>Step 1:</strong> Enter your email in the widget on the right and verify it (grants 1 base entry).</li>
-          <li><strong>Step 2:</strong> Use the widget to claim your daily check-in bonus (+5 entries).</li>
-          <li><strong>Step 3:</strong> Complete 60-second bonus tasks or refer friends to stack your entries up to the fair-play cap.</li>
-          <li><strong>Step 4:</strong> Winners are drawn automatically when the timer hits zero and contacted via email within 48 hours.</li>
-        </ul>
+        <div id="c-instructions" class="rules-list">
+          <ul>
+            <li><strong>Step 1:</strong> Enter your email in the widget on the right and verify it (grants 1 base entry).</li>
+            <li><strong>Step 2:</strong> Use the widget to claim your daily check-in bonus (+5 entries).</li>
+            <li><strong>Step 3:</strong> Complete 60-second bonus tasks or refer friends to stack your entries up to the fair-play cap.</li>
+            <li><strong>Step 4:</strong> Winners are drawn automatically when the timer hits zero and contacted via email within 48 hours.</li>
+          </ul>
+        </div>
         <p style="font-size: 13px; color: var(--muted); margin-top: 24px;">
           Full terms apply. See our <a href="/contest-rules.html">Official Rules</a> and <a href="/privacy.html">Privacy Policy</a>.
-       .
+        </p>
       </div>
 
-      <!-- Right: The Widget -->
       <div class="widget-sticky">
         <div id="stackdeals-widget"></div>
       </div>
@@ -90,11 +90,10 @@
     <div id="error" class="loading-state" style="display: none;">
       <h2>Giveaway Not Found</h2>
       <p>This campaign may have ended or the link is invalid.</p>
-      <a href="/" class="btn" style="display:inline-block; margin-top:16px; padding:10px 20px; background:var(--primary); color:#fff; border-radius:8px;">Return Home</a>
+      <a href="/" class="btn" style="margin-top:16px;">Return Home</a>
     </div>
   </main>
 
-  <!-- Scripts -->
   <script src="/js/widget.js"></script>
   <script>
     (function() {
@@ -105,6 +104,10 @@
         document.getElementById('loading').style.display = 'none';
         document.getElementById('error').style.display = 'block';
         return;
+      }
+
+      function esc(s) { 
+        return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); 
       }
 
       async function loadCampaign() {
@@ -123,10 +126,23 @@
           document.getElementById('c-prize').textContent = c.prize || 'Mystery Prize';
           document.getElementById('c-winners').textContent = c.winners || 1;
           
+          if (c.custom_instructions && c.custom_instructions.trim() !== '') {
+            document.getElementById('c-instructions').innerHTML = c.custom_instructions;
+          }
+
+          if (c.custom_action_title && c.custom_action_link) {
+            document.getElementById('custom-action-box').innerHTML = `
+              <div class="custom-action-box">
+                <h3>🎯 Bonus Action</h3>
+                <p>${esc(c.custom_action_title)}</p>
+                <a href="${esc(c.custom_action_link)}" target="_blank" rel="noopener" class="btn">Take Action →</a>
+              </div>
+            `;
+          }
+          
           document.getElementById('loading').style.display = 'none';
           document.getElementById('content').style.display = 'grid';
 
-          // Start Countdown
           const endsAt = c.ends_at * 1000;
           function tick() {
             const diff = Math.max(0, endsAt - Date.now());
@@ -148,6 +164,7 @@
           document.getElementById('error').style.display = 'block';
         }
       }
+
       loadCampaign();
     })();
   </script>
