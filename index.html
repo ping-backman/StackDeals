@@ -7,35 +7,24 @@
   <meta name="description" content="Enter free giveaways, earn bonus entries with 60-second tasks, and win gift cards. No purchase necessary.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎟️</text></svg>">
   
-  <!-- Main Site Styles (You can move this to css/styles.css) -->
   <style>
     :root {
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --line: #e2e8f0;
-      --text: #0f172a;
-      --muted: #64748b;
-      --primary: #2563eb;
-      --primary-hover: #1d4ed8;
-      --green: #10b981;
-      --radius: 12px;
+      --bg: #f8fafc; --card: #ffffff; --line: #e2e8f0; --text: #0f172a;
+      --muted: #64748b; --primary: #2563eb; --primary-hover: #1d4ed8; --radius: 12px;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.6; }
     a { color: var(--primary); text-decoration: none; }
     a:hover { text-decoration: underline; }
     
-    /* Layout */
     .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
     section { padding: 60px 0; }
     
-    /* Header */
     header { background: var(--card); border-bottom: 1px solid var(--line); padding: 16px 0; position: sticky; top: 0; z-index: 50; }
     .nav-wrap { display: flex; justify-content: space-between; align-items: center; }
     .logo { font-size: 22px; font-weight: 800; color: var(--text); text-decoration: none; }
     .nav-links { display: flex; gap: 24px; font-size: 14px; font-weight: 600; }
     
-    /* Hero */
     .hero { text-align: center; padding: 80px 20px 60px; }
     .hero h1 { font-size: clamp(32px, 5vw, 48px); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 16px; color: var(--text); }
     .hero p { font-size: 18px; color: var(--muted); max-width: 600px; margin: 0 auto 32px; }
@@ -45,35 +34,25 @@
     .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
     .btn-ghost:hover { background: var(--bg); text-decoration: none; }
 
-    /* Stats Strip */
     .stats-strip { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 24px 0; }
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; text-align: center; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 24px; text-align: center; }
     .stat-item h3 { font-size: 28px; font-weight: 800; color: var(--primary); margin-bottom: 4px; }
     .stat-item p { font-size: 13px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-    .countdown-box { display: flex; justify-content: center; gap: 12px; margin-top: 8px; }
-    .countdown-unit { background: var(--bg); padding: 8px 12px; border-radius: 6px; min-width: 50px; }
-    .countdown-unit span { display: block; font-size: 20px; font-weight: 800; color: var(--text); }
-    .countdown-unit small { font-size: 10px; color: var(--muted); text-transform: uppercase; }
-
-    /* How It Works */
+    
     .section-title { text-align: center; font-size: 28px; font-weight: 800; margin-bottom: 40px; }
-    .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
-    .step-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; text-align: center; }
+    .steps-grid, .earn-grid, .giveaways-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    
+    .step-card, .earn-card, .giveaway-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+    .step-card { text-align: center; }
     .step-icon { font-size: 36px; margin-bottom: 16px; }
-    .step-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
-    .step-card p { font-size: 15px; color: var(--muted); }
-
-    /* Ways to Earn */
-    .earn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-    .earn-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; display: flex; gap: 16px; align-items: flex-start; }
+    .step-card h3, .earn-card h4 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+    .step-card p, .earn-card p { font-size: 15px; color: var(--muted); }
+    
+    .earn-card { display: flex; gap: 16px; align-items: flex-start; }
     .earn-icon { font-size: 28px; flex-shrink: 0; }
-    .earn-card h4 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
-    .earn-card p { font-size: 14px; color: var(--muted); }
     .earn-badge { display: inline-block; background: #eff6ff; color: var(--primary); padding: 4px 10px; border-radius: 99px; font-size: 12px; font-weight: 800; margin-top: 8px; }
 
-    /* Active Giveaways */
-    .giveaways-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
-    .giveaway-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; transition: box-shadow 0.2s; }
+    .giveaway-card { overflow: hidden; transition: box-shadow 0.2s; padding: 0; }
     .giveaway-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
     .gc-header { background: var(--primary); color: #fff; padding: 20px; }
     .gc-header h3 { font-size: 18px; font-weight: 700; }
@@ -81,7 +60,6 @@
     .gc-body p { font-size: 14px; color: var(--muted); margin-bottom: 16px; }
     .gc-footer { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--muted); font-weight: 600; }
 
-    /* FAQ */
     .faq-list { max-width: 700px; margin: 0 auto; }
     .faq-item { background: var(--card); border: 1px solid var(--line); border-radius: 8px; margin-bottom: 12px; overflow: hidden; }
     .faq-q { padding: 18px 20px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
@@ -90,20 +68,18 @@
     .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 20px; font-size: 15px; color: var(--muted); }
     .faq-item.open .faq-a { max-height: 200px; padding-bottom: 20px; }
 
-    /* Footer */
     footer { background: var(--card); border-top: 1px solid var(--line); padding: 40px 0; text-align: center; font-size: 13px; color: var(--muted); }
-    .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 16px; font-weight: 600; }
+    .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 16px; font-weight: 600; flex-wrap: wrap; }
     .compliance { max-width: 600px; margin: 0 auto; line-height: 1.5; }
 
     @media (max-width: 600px) {
-      .nav-links { display: none; } /* Simplified for mobile, can add hamburger later */
+      .nav-links { display: none; }
       .hero { padding: 40px 20px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
   <header>
     <div class="container nav-wrap">
       <a href="/" class="logo">🎟️ StackDeals</a>
@@ -111,51 +87,36 @@
         <a href="#how-it-works">How It Works</a>
         <a href="#active-giveaways">Giveaways</a>
         <a href="/contest-rules.html">Rules</a>
+        <a href="/contact.html">Contact</a>
         <a href="/admin">Admin</a>
       </nav>
       <a href="#active-giveaways" class="btn btn-primary" style="padding: 10px 20px; font-size: 14px;">Enter Now</a>
     </div>
   </header>
 
-  <!-- Hero -->
   <section class="hero">
     <div class="container">
-      <h1>Win Real Rewards. <br>Zero Cost to Enter.</h1>
+      <h1>Win Real Rewards.<br>Zero Cost to Enter.</h1>
       <p>StackDeals is the fairest way to win. Sign up for free, boost your odds with 60-second bonus tasks, and let our transparent, weighted draw do the rest.</p>
       <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
         <a href="#active-giveaways" class="btn btn-primary">View Active Giveaways</a>
         <a href="#how-it-works" class="btn btn-ghost">Learn How It Works</a>
       </div>
-    </div.>
+    </div>
   </section>
 
-  <!-- Live Stats Strip -->
   <div class="stats-strip">
     <div class="container stats-grid">
-      <div class="stat-item">
-        <h3 id="cd-d">00</h3>
-        <p>Days Left</p>
-      </div>
-      <div class="stat-item">
-        <h3 id="cd-h">00</h3>
-        <p>Hours</p>
-      </div>
-      <div class="stat-item">
-        <h3 id="cd-m">00</h3>
-        <p>Minutes</p>
-      </div>
-      <div class="stat-item">
-        <h3 id="cd-s">00</h3>
-        <p>Seconds</p>
-      </div>
+      <div class="stat-item"><h3 id="cd-d">00</h3><p>Days Left</p></div>
+      <div class="stat-item"><h3 id="cd-h">00</h3><p>Hours</p></div>
+      <div class="stat-item"><h3 id="cd-m">00</h3><p>Minutes</p></div>
+      <div class="stat-item"><h3 id="cd-s">00</h3><p>Seconds</p></div>
       <div class="stat-item" style="border-left: 1px solid var(--line); padding-left: 24px;">
-        <h3>100% Free</h3>
-        <p>No Purchase Necessary</p>
+        <h3>100% Free</h3><p>No Purchase Necessary</p>
       </div>
     </div>
   </div>
 
-  <!-- How It Works -->
   <section id="how-it-works">
     <div class="container">
       <h2 class="section-title">How StackDeals Works</h2>
@@ -179,7 +140,6 @@
     </div>
   </section>
 
-  <!-- Ways to Earn -->
   <section style="background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
     <div class="container">
       <h2 class="section-title">Ways to Earn Entries</h2>
@@ -212,43 +172,15 @@
     </div>
   </section>
 
-  <!-- Active Giveaways -->
   <section id="active-giveaways">
     <div class="container">
       <h2 class="section-title">Active Giveaways</h2>
-      <div class="giveaways-grid">
-        <!-- Static Placeholder Card (Will be dynamically generated or manually updated per campaign) -->
-        <div class="giveaway-card">
-          <div class="gc-header">
-            <h3>🎁 Holiday Bonus Giveaway</h3>
-          </div>
-          <div class="gc-body">
-            <p>Win one of four $25 Amazon Gift Cards. Enter for free and boost your odds with daily tasks.</p>
-            <div class="gc-footer">
-              <span>4 Winners</span>
-              <a href="/giveaways/holiday-bonus-001" class="btn btn-primary" style="padding: 8px 16px; font-size: 13px;">Enter Now →</a>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Example of a second card (can be removed or duplicated) -->
-        <div class="giveaway-card" style="opacity: 0.7;">
-          <div class="gc-header" style="background: var(--muted);">
-            <h3>🔒 Upcoming: Tech Gear Drop</h3>
-          </div>
-          <div class="gc-body">
-            <p>Stay tuned. New giveaways launch monthly. Join our email list to get early access notifications.</p>
-            <div class="gc-footer">
-              <span>Coming Soon</span>
-              <button class="btn btn-ghost" style="padding: 8px 16px; font-size: 13px; cursor: not-allowed;" disabled>Notify Me</button>
-            </div>
-          </div>
-        </div>
+      <div class="giveaways-grid" id="active-giveaways-grid">
+        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--muted);">Loading active giveaways...</div>
       </div>
     </div>
   </section>
 
-  <!-- FAQ -->
   <section style="background: var(--card); border-top: 1px solid var(--line);">
     <div class="container">
       <h2 class="section-title">Frequently Asked Questions</h2>
@@ -273,14 +205,13 @@
     </div>
   </section>
 
-  <!-- Footer -->
   <footer>
     <div class="container">
       <div class="footer-links">
         <a href="/contest-rules.html">Official Rules</a>
         <a href="/privacy.html">Privacy Policy</a>
         <a href="/terms.html">Terms of Service</a>
-        <a href="mailto:support@getstackdeals.xyz">Contact Support</a>
+        <a href="/contact.html">Contact Support</a>
       </div>
       <div class="compliance">
         <p><strong>No Purchase Necessary.</strong> A purchase will not increase your chances of winning. Void where prohibited by law. StackDeals is not affiliated with, endorsed by, or sponsored by Amazon or any task providers. All trademarks belong to their respective owners.</p>
@@ -289,7 +220,44 @@
     </div>
   </footer>
 
-  <!-- Scripts -->
   <script src="/js/app.js"></script>
+  <script>
+    // Dynamic Giveaways Grid Loader
+    (async function loadActiveGiveaways() {
+      try {
+        const res = await fetch('/api/campaigns');
+        const data = await res.json();
+        const grid = document.getElementById('active-giveaways-grid');
+        if (!grid) return;
+        
+        if (data.ok && data.campaigns && data.campaigns.length > 0) {
+          grid.innerHTML = data.campaigns.map(c => `
+            <div class="giveaway-card">
+              <div class="gc-header">
+                <h3>🎁 ${esc(c.title)}</h3>
+              </div>
+              <div class="gc-body">
+                <p>${esc(c.prize_description || 'Mystery Prize')}</p>
+                <div class="gc-footer">
+                  <span>${c.winners_count} Winner(s)</span>
+                  <a href="/giveaway.html?id=${esc(c.id)}" class="btn btn-primary" style="padding: 8px 16px; font-size: 13px;">Enter Now →</a>
+                </div>
+              </div>
+            </div>
+          `).join('');
+        } else {
+          grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--muted); padding: 40px;">No active giveaways at the moment. Check back soon!</p>';
+        }
+      } catch (e) {
+        console.error('Failed to load giveaways', e);
+        const grid = document.getElementById('active-giveaways-grid');
+        if (grid) grid.innerHTML = '<p style="grid-column:1/-1; text-align:center; color:var(--muted); padding: 40px;">Could not load giveaways.</p>';
+      }
+    })();
+
+    function esc(s) { 
+      return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); 
+    }
+  </script>
 </body>
 </html>
