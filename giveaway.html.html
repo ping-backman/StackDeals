@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giveaway Details | StackDeals</title>
+  <meta name="description" content="Enter this StackDeals giveaway for free, complete bonus tasks, and win.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎟️</text></svg>">
+  <style>
+    :root { --bg: #f8fafc; --card: #ffffff; --line: #e2e8f0; --text: #0f172a; --muted: #64748b; --primary: #2563eb; --radius: 12px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, sans-serif; line-height: 1.6; }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+    
+    header { background: var(--card); border-bottom: 1px solid var(--line); padding: 16px 0; }
+    .nav-wrap { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 22px; font-weight: 800; color: var(--text); text-decoration: none; }
+    
+    .layout { display: grid; grid-template-columns: 1fr 400px; gap: 40px; padding: 40px 0; }
+    @media (max-width: 800px) { .layout { grid-template-columns: 1fr; } }
+    
+    .campaign-info h1 { font-size: 32px; font-weight: 800; margin-bottom: 12px; }
+    .prize-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius); padding: 20px; margin: 24px 0; }
+    .prize-box h3 { color: var(--primary); font-size: 18px; margin-bottom: 8px; }
+    .countdown-strip { display: flex; gap: 12px; margin: 24px 0; }
+    .countdown-unit { background: var(--card); border: 1px solid var(--line); padding: 12px; border-radius: 8px; text-align: center; min-width: 70px; }
+    .countdown-unit span { display: block; font-size: 24px; font-weight: 800; color: var(--text); }
+    .countdown-unit small { font-size: 11px; color: var(--muted); text-transform: uppercase; }
+    
+    .rules-list { margin: 24px 0; padding-left: 20px; color: var(--muted); }
+    .rules-list li { margin-bottom: 8px; }
+    
+    .widget-sticky { position: sticky; top: 100px; }
+    .loading-state { text-align: center; padding: 60px 20px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav-wrap">
+      <a href="/" class="logo">🎟️ StackDeals</a>
+      <nav>
+        <a href="/">Back to Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="loading" class="loading-state">Loading giveaway details...</div>
+    
+    <div id="content" class="layout" style="display: none;">
+      <!-- Left: Campaign Details -->
+      <div class="campaign-info">
+        <h1 id="c-title">Giveaway Title</h1>
+        <p style="color: var(--muted); font-size: 16px;">Official entry page. No purchase necessary. Open to residents of US, UK, and CA (18+).</p>
+        
+        <div class="prize-box">
+          <h3>🎁 Grand Prize</h3>
+          <p id="c-prize" style="font-size: 18px; font-weight: 600; color: var(--text);">Prize Description</p>
+          <p style="margin-top: 8px; font-size: 14px; color: var(--muted);"><span id="c-winners">1</span> winner(s) will be selected via a transparent, weighted random draw.</p>
+        </div>
+
+        <h3>⏰ Time Remaining</h3>
+        <div class="countdown-strip">
+          <div class="countdown-unit"><span id="cd-d">00</span><small>Days</small></div>
+          <div class="countdown-unit"><span id="cd-h">00</span><small>Hours</small></div>
+          <div class="countdown-unit"><span id="cd-m">00</span><small>Mins</small></div>
+          <div class="countdown-unit"><span id="cd-s">00</span><small>Secs</small></div>
+        </div>
+
+        <h3>📜 How to Enter & Win</h3>
+        <ul class="rules-list">
+          <li><strong>Step 1:</strong> Enter your email in the widget on the right and verify it (grants 1 base entry).</li>
+          <li><strong>Step 2:</strong> Use the widget to claim your daily check-in bonus (+5 entries).</li>
+          <li><strong>Step 3:</strong> Complete 60-second bonus tasks or refer friends to stack your entries up to the fair-play cap.</li>
+          <li><strong>Step 4:</strong> Winners are drawn automatically when the timer hits zero and contacted via email within 48 hours.</li>
+        </ul>
+        <p style="font-size: 13px; color: var(--muted); margin-top: 24px;">
+          Full terms apply. See our <a href="/contest-rules.html">Official Rules</a> and <a href="/privacy.html">Privacy Policy</a>.
+       .
+      </div>
+
+      <!-- Right: The Widget -->
+      <div class="widget-sticky">
+        <div id="stackdeals-widget"></div>
+      </div>
+    </div>
+
+    <div id="error" class="loading-state" style="display: none;">
+      <h2>Giveaway Not Found</h2>
+      <p>This campaign may have ended or the link is invalid.</p>
+      <a href="/" class="btn" style="display:inline-block; margin-top:16px; padding:10px 20px; background:var(--primary); color:#fff; border-radius:8px;">Return Home</a>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="/js/widget.js"></script>
+  <script>
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const campaignId = params.get('id');
+      
+      if (!campaignId) {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('error').style.display = 'block';
+        return;
+      }
+
+      async function loadCampaign() {
+        try {
+          const res = await fetch(`/api/campaign?id=${encodeURIComponent(campaignId)}`);
+          const data = await res.json();
+          
+          if (!data.ok || !data.campaign) {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('error').style.display = 'block';
+            return;
+          }
+
+          const c = data.campaign;
+          document.getElementById('c-title').textContent = c.title;
+          document.getElementById('c-prize').textContent = c.prize || 'Mystery Prize';
+          document.getElementById('c-winners').textContent = c.winners || 1;
+          
+          document.getElementById('loading').style.display = 'none';
+          document.getElementById('content').style.display = 'grid';
+
+          // Start Countdown
+          const endsAt = c.ends_at * 1000;
+          function tick() {
+            const diff = Math.max(0, endsAt - Date.now());
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById('cd-d').textContent = String(d).padStart(2, '0');
+            document.getElementById('cd-h').textContent = String(h).padStart(2, '0');
+            document.getElementById('cd-m').textContent = String(m).padStart(2, '0');
+            document.getElementById('cd-s').textContent = String(s).padStart(2, '0');
+          }
+          tick();
+          setInterval(tick, 1000);
+
+        } catch (e) {
+          console.error(e);
+          document.getElementById('loading').style.display = 'none';
+          document.getElementById('error').style.display = 'block';
+        }
+      }
+      loadCampaign();
+    })();
+  </script>
+</body>
+</html>
