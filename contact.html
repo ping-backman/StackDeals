@@ -14,26 +14,26 @@
     header { background: var(--card); border-bottom: 1px solid var(--line); padding: 16px 0; }
     .nav-wrap { max-width: 1000px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
     .logo { font-size: 22px; font-weight: 800; color: var(--text); text-decoration: none; }
-    
     .form-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
     .form-card h1 { font-size: 24px; margin-bottom: 8px; }
     .form-card p { color: var(--muted); margin-bottom: 24px; font-size: 15px; }
-    
     label { display: block; font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
     input, textarea, select { width: 100%; padding: 12px; border: 1px solid var(--line); border-radius: 8px; font-size: 15px; font-family: inherit; margin-bottom: 16px; outline: none; transition: border 0.2s; }
     input:focus, textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
     textarea { min-height: 120px; resize: vertical; }
-    
     .btn { width: 100%; padding: 14px; background: var(--primary); color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.2s; }
     .btn:hover { background: #1d4ed8; }
     .btn:disabled { background: #94a3b8; cursor: not-allowed; }
-    
     .msg { padding: 12px; border-radius: 8px; font-size: 14px; margin-bottom: 16px; text-align: center; display: none; }
     .msg-ok { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
     .msg-err { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
   </style>
- a>
-      </nav>
+</head>
+<body>
+  <header>
+    <div class="nav-wrap">
+      <a href="/" class="logo">🎟️ StackDeals</a>
+      <nav><a href="/">Back to Home</a></nav>
     </div>
   </header>
 
@@ -65,7 +65,7 @@
         
         <div id="turnstile" style="margin-bottom: 16px; min-height: 65px;"></div>
         
-        <button type="submit" id="submit-btn" class="btn" disabled>Send Message</button>
+        <button type="submit" id="submit-btn" class="btn" disabled>Loading security check…</button>
       </form>
     </div>
   </main>
@@ -77,34 +77,61 @@
       const btn = document.getElementById('submit-btn');
       let turnstileId = null;
 
-      // Load Turnstile
-      const loadTurnstile = () => {
-        turnstileId = window.turnstile.render('#turnstile', {
-          sitekey: '0x4AAAAAAGFNBZrXJTf5C2J5', // REPLACE WITH YOUR ACTUAL SITEKEY
-          callback: () => { btn.disabled = false; btn.textContent = 'Send Message'; },
-          'error-callback': () => { msg.className = 'msg msg-err'; msg.style.display = 'block'; msg.textContent = 'Security check failed to load. Please refresh.'; }
-        });
+      const enableButton = () => {
+        btn.disabled = false;
+        btn.textContent = 'Send Message';
       };
 
-      if (window.turnstile) loadTurnstile();
-      else {
+      const loadTurnstile = () => {
+        try {
+          turnstileId = window.turnstile.render('#turnstile', {
+            sitekey: '0x4AAAAAAGFNBZrXJTf5C2J5', // ⚠️ REPLACE WITH YOUR ACTUAL TURNSTILE SITEKEY
+            callback: enableButton,
+            'error-callback': () => {
+              msg.className = 'msg msg-err';
+              msg.textContent = 'Security check failed to load. The button will enable in 3 seconds as a fallback.';
+              msg.style.display = 'block';
+              setTimeout(enableButton, 3000);
+            }
+          });
+        } catch (e) {
+          setTimeout(enableButton, 3000);
+        }
+      };
+
+      if (window.turnstile && window.turnstile.render) {
+        loadTurnstile();
+      } else {
         const s = document.createElement('script');
         s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
         s.onload = loadTurnstile;
+        s.onerror = () => {
+          setTimeout(enableButton, 3000);
+        };
         document.head.appendChild(s);
       }
+
+      // Fallback: if button is still disabled after 5 seconds, enable it anyway
+      setTimeout(() => {
+        if (btn.disabled) {
+          enableButton();
+        }
+      }, 5000);
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         btn.disabled = true; btn.textContent = 'Sending...';
         msg.style.display = 'none';
 
+        let token = '';
+        try { token = window.turnstile ? (window.turnstile.getResponse(turnstileId) || '') : ''; } catch (err) { token = ''; }
+
         const payload = {
           name: document.getElementById('name').value,
           email: document.getElementById('email').value,
           subject: document.getElementById('subject').value,
           message: document.getElementById('message').value,
-          'cf-turnstile-response': window.turnstile.getResponse(turnstileId)
+          'cf-turnstile-response': token
         };
 
         try {
@@ -120,7 +147,7 @@
             msg.textContent = 'Message sent successfully! We will reply to ' + payload.email + ' shortly.';
             msg.style.display = 'block';
             form.reset();
-            window.turnstile.reset(turnstileId);
+            if (window.turnstile) window.turnstile.reset(turnstileId);
             btn.disabled = true; btn.textContent = 'Send Message';
           } else {
             throw new Error(data.error || 'Failed to send.');
@@ -130,7 +157,7 @@
           msg.textContent = err.message || 'Network error. Please try again.';
           msg.style.display = 'block';
           btn.disabled = false; btn.textContent = 'Send Message';
-          window.turnstile.reset(turnstileId);
+          if (window.turnstile) window.turnstile.reset(turnstileId);
         }
       });
     })();
