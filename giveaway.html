@@ -31,9 +31,14 @@
     .loading-state { text-align: center; padding: 60px 20px; color: var(--muted); }
     .btn { display: inline-block; padding: 10px 20px; background: var(--primary); color: #fff; border-radius: 8px; font-size: 14px; font-weight: 700; text-decoration: none; }
     .btn:hover { background: #1d4ed8; text-decoration: none; }
-    .custom-action-box { background: #f0fdf4; border: 1px solid #86efac; border-radius: var(--radius); padding: 20px; margin: 24px 0; }
-    .custom-action-box h3 { color: #166534; font-size: 18px; margin-bottom: 8px; }
-    .custom-action-box p { font-size: 15px; color: var(--text); margin-bottom: 12px; }
+    .custom-actions-box { background: #f0fdf4; border: 1px solid #86efac; border-radius: var(--radius); padding: 20px; margin: 24px 0; }
+    .custom-actions-box h3 { color: #166534; font-size: 18px; margin-bottom: 12px; }
+    .custom-action-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #bbf7d0; }
+    .custom-action-item:last-child { border-bottom: none; }
+    .custom-action-item span { font-size: 15px; color: var(--text); }
+    .offerwall-box { background: #fef3c7; border: 1px solid #fde68a; border-radius: var(--radius); padding: 20px; margin: 24px 0; }
+    .offerwall-box h3 { color: #92400e; font-size: 18px; margin-bottom: 8px; }
+    .offerwall-box p { font-size: 15px; color: var(--text); margin-bottom: 12px; }
   </style>
 </head>
 <body>
@@ -58,7 +63,8 @@
           <p style="margin-top: 8px; font-size: 14px; color: var(--muted);"><span id="c-winners">1</span> winner(s) will be selected via a transparent, weighted random draw.</p>
         </div>
 
-        <div id="custom-action-box"></div>
+        <div id="custom-actions-container"></div>
+        <div id="offerwall-container"></div>
 
         <h3>⏰ Time Remaining</h3>
         <div class="countdown-strip">
@@ -130,14 +136,66 @@
             document.getElementById('c-instructions').innerHTML = c.custom_instructions;
           }
 
-          if (c.custom_action_title && c.custom_action_link) {
-            document.getElementById('custom-action-box').innerHTML = `
-              <div class="custom-action-box">
-                <h3>🎯 Bonus Action</h3>
-                <p>${esc(c.custom_action_title)}</p>
-                <a href="${esc(c.custom_action_link)}" target="_blank" rel="noopener" class="btn">Take Action →</a>
+          // Render custom actions (multiple)
+          let actions = [];
+          try { actions = JSON.parse(c.custom_actions || '[]'); } catch (e) {}
+          
+          if (actions.length > 0) {
+            const container = document.getElementById('custom-actions-container');
+            container.innerHTML = `
+              <div class="custom-actions-box">
+                <h3>🎯 Bonus Actions</h3>
+                ${actions.map(a => `
+                  <div class="custom-action-item">
+                    <span>${esc(a.title)}</span>
+                    <a href="${esc(a.link)}" target="_blank" rel="noopener" class="btn">Take Action →</a>
+                  </div>
+                `).join('')}
               </div>
             `;
+          }
+
+          // Render offerwall box if enabled
+          if (c.show_offerwall !== 0) {
+            const container = document.getElementById('offerwall-container');
+            container.innerHTML = `
+              <div class="offerwall-box">
+                <h3>⚡ Bonus Tasks (60–90 sec each)</h3>
+                <p>Complete fast tasks to earn +50 to +300 entries each. Tasks are matched to your device and credit automatically.</p>
+                <a href="#" id="offerwall-btn" class="btn">Earn Bonus Entries →</a>
+              </div>
+            `;
+            
+            document.getElementById('offerwall-btn').addEventListener('click', async (e) => {
+              e.preventDefault();
+              const btn = e.target;
+              btn.textContent = 'Opening...';
+              btn.style.opacity = '0.6';
+              
+              try {
+                const session = localStorage.getItem('sd_session');
+                if (!session) {
+                  alert('Please sign up first to access bonus tasks.');
+                  btn.textContent = 'Earn Bonus Entries →';
+                  btn.style.opacity = '1';
+                  return;
+                }
+                
+                const res = await fetch(`/api/offerwall-link?session=${encodeURIComponent(session)}`);
+                const data = await res.json();
+                
+                if (data.ok && data.url) {
+                  window.open(data.url, '_blank', 'noopener');
+                } else {
+                  alert(data.error || 'Could not open bonus tasks. Please try again.');
+                }
+              } catch (err) {
+                alert('Network error. Please try again.');
+              }
+              
+              btn.textContent = 'Earn Bonus Entries →';
+              btn.style.opacity = '1';
+            });
           }
           
           document.getElementById('loading').style.display = 'none';
