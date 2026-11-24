@@ -1,122 +1,295 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>StackDeals $150 Gift Card Giveaway | Enter Free</title>
-  <meta name="description" content="Enter the StackDeals $150 Gift Card Launch Giveaway. Watch clips, refer friends, and win. No purchase necessary.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StackDeals | Free Giveaways & Bonus Entry Tasks</title>
+  <meta name="description" content="Enter free giveaways, earn bonus entries with 60-second tasks, and win gift cards. No purchase necessary.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎟️</text></svg>">
-  <link rel="stylesheet" href="/css/style.css">
+  
+  <!-- Main Site Styles (You can move this to css/styles.css) -->
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --line: #e2e8f0;
+      --text: #0f172a;
+      --muted: #64748b;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --green: #10b981;
+      --radius: 12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; line-height: 1.6; }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    
+    /* Layout */
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+    section { padding: 60px 0; }
+    
+    /* Header */
+    header { background: var(--card); border-bottom: 1px solid var(--line); padding: 16px 0; position: sticky; top: 0; z-index: 50; }
+    .nav-wrap { display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 22px; font-weight: 800; color: var(--text); text-decoration: none; }
+    .nav-links { display: flex; gap: 24px; font-size: 14px; font-weight: 600; }
+    
+    /* Hero */
+    .hero { text-align: center; padding: 80px 20px 60px; }
+    .hero h1 { font-size: clamp(32px, 5vw, 48px); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 16px; color: var(--text); }
+    .hero p { font-size: 18px; color: var(--muted); max-width: 600px; margin: 0 auto 32px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 28px; border-radius: 8px; font-size: 16px; font-weight: 700; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-hover); text-decoration: none; }
+    .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+    .btn-ghost:hover { background: var(--bg); text-decoration: none; }
+
+    /* Stats Strip */
+    .stats-strip { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 24px 0; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; text-align: center; }
+    .stat-item h3 { font-size: 28px; font-weight: 800; color: var(--primary); margin-bottom: 4px; }
+    .stat-item p { font-size: 13px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+    .countdown-box { display: flex; justify-content: center; gap: 12px; margin-top: 8px; }
+    .countdown-unit { background: var(--bg); padding: 8px 12px; border-radius: 6px; min-width: 50px; }
+    .countdown-unit span { display: block; font-size: 20px; font-weight: 800; color: var(--text); }
+    .countdown-unit small { font-size: 10px; color: var(--muted); text-transform: uppercase; }
+
+    /* How It Works */
+    .section-title { text-align: center; font-size: 28px; font-weight: 800; margin-bottom: 40px; }
+    .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+    .step-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; text-align: center; }
+    .step-icon { font-size: 36px; margin-bottom: 16px; }
+    .step-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+    .step-card p { font-size: 15px; color: var(--muted); }
+
+    /* Ways to Earn */
+    .earn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .earn-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; display: flex; gap: 16px; align-items: flex-start; }
+    .earn-icon { font-size: 28px; flex-shrink: 0; }
+    .earn-card h4 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .earn-card p { font-size: 14px; color: var(--muted); }
+    .earn-badge { display: inline-block; background: #eff6ff; color: var(--primary); padding: 4px 10px; border-radius: 99px; font-size: 12px; font-weight: 800; margin-top: 8px; }
+
+    /* Active Giveaways */
+    .giveaways-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .giveaway-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; transition: box-shadow 0.2s; }
+    .giveaway-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+    .gc-header { background: var(--primary); color: #fff; padding: 20px; }
+    .gc-header h3 { font-size: 18px; font-weight: 700; }
+    .gc-body { padding: 20px; }
+    .gc-body p { font-size: 14px; color: var(--muted); margin-bottom: 16px; }
+    .gc-footer { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--muted); font-weight: 600; }
+
+    /* FAQ */
+    .faq-list { max-width: 700px; margin: 0 auto; }
+    .faq-item { background: var(--card); border: 1px solid var(--line); border-radius: 8px; margin-bottom: 12px; overflow: hidden; }
+    .faq-q { padding: 18px 20px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+    .faq-q::after { content: '+'; font-size: 20px; color: var(--muted); transition: transform 0.2s; }
+    .faq-item.open .faq-q::after { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; padding: 0 20px; font-size: 15px; color: var(--muted); }
+    .faq-item.open .faq-a { max-height: 200px; padding-bottom: 20px; }
+
+    /* Footer */
+    footer { background: var(--card); border-top: 1px solid var(--line); padding: 40px 0; text-align: center; font-size: 13px; color: var(--muted); }
+    .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 16px; font-weight: 600; }
+    .compliance { max-width: 600px; margin: 0 auto; line-height: 1.5; }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; } /* Simplified for mobile, can add hamburger later */
+      .hero { padding: 40px 20px; }
+    }
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <a href="/" class="logo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary)"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-      StackDeals
-    </a>
-    <nav>
-      <a href="#how">How it Works</a>
-      <a href="#prizes">Prizes</a>
-      <a href="#faq">FAQ</a>
-      <a href="#stackdeals-widget" class="nav-cta">Enter Now</a>
-    </nav>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav-wrap">
+      <a href="/" class="logo">🎟️ StackDeals</a>
+      <nav class="nav-links">
+        <a href="#how-it-works">How It Works</a>
+        <a href="#active-giveaways">Giveaways</a>
+        <a href="/contest-rules.html">Rules</a>
+        <a href="/admin">Admin</a>
+      </nav>
+      <a href="#active-giveaways" class="btn btn-primary" style="padding: 10px 20px; font-size: 14px;">Enter Now</a>
+    </div>
   </header>
 
-  <main>
-    <section class="hero">
-      <div class="hero-badge">🎉 21-Day Launch Event</div>
-      <h1>Win <span>$150</span> in Gift Cards & Rewards</h1>
-      <p>Join the StackDeals community. Earn entries by watching movie clips, checking in daily, and referring friends. 100% Free to enter.</p>
-      
-      <div class="countdown" id="countdown">
-        <div class="cd-block"><div class="cd-val" id="cd-d">00</div><div class="cd-lbl">Days</div></div>
-        <div class="cd-block"><div class="cd-val" id="cd-h">00</div><div class="cd-lbl">Hours</div></div>
-        <div class="cd-block"><div class="cd-val" id="cd-m">00</div><div class="cd-lbl">Mins</div></div>
-        <div class="cd-block"><div class="cd-val" id="cd-s">00</div><div class="cd-lbl">Secs</div></div>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1>Win Real Rewards. <br>Zero Cost to Enter.</h1>
+      <p>StackDeals is the fairest way to win. Sign up for free, boost your odds with 60-second bonus tasks, and let our transparent, weighted draw do the rest.</p>
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <a href="#active-giveaways" class="btn btn-primary">View Active Giveaways</a>
+        <a href="#how-it-works" class="btn btn-ghost">Learn How It Works</a>
       </div>
-    </section>
+    </div.>
+  </section>
 
-    <section class="widget-wrap">
-      <div id="stackdeals-widget"></div>
-    </section>
-
-    <section class="section section-alt" id="how">
-      <h2>How to Maximize Your Entries</h2>
-      <p class="sub">Every action earns you points. The more points you have, the higher your chances of winning.</p>
-      <div class="grid-3">
-        <div class="card">
-          <div class="card-icon">📧</div>
-          <h3>1. Verify Email (+1)</h3>
-          <p>Sign up and confirm your email to lock in your first entry and unlock your referral link.</p>
-        </div>
-        <div class="card">
-          <div class="card-icon">🎬</div>
-          <h3>2. Watch Clips (+35)</h3>
-          <p>Watch curated movie clips on our partner site. Multipliers increase daily up to +35 entries per clip!</p>
-        </div>
-        <div class="card">
-          <div class="card-icon">🤝</div>
-          <h3>3. Refer Friends (+5)</h3>
-          <p>Share your unique link. Every friend who joins and verifies earns you 5 bonus entries instantly.</p>
-        </div>
+  <!-- Live Stats Strip -->
+  <div class="stats-strip">
+    <div class="container stats-grid">
+      <div class="stat-item">
+        <h3 id="cd-d">00</h3>
+        <p>Days Left</p>
       </div>
-    </section>
+      <div class="stat-item">
+        <h3 id="cd-h">00</h3>
+        <p>Hours</p>
+      </div>
+      <div class="stat-item">
+        <h3 id="cd-m">00</h3>
+        <p>Minutes</p>
+      </div>
+      <div class="stat-item">
+        <h3 id="cd-s">00</h3>
+        <p>Seconds</p>
+      </div>
+      <div class="stat-item" style="border-left: 1px solid var(--line); padding-left: 24px;">
+        <h3>100% Free</h3>
+        <p>No Purchase Necessary</p>
+      </div>
+    </div>
+  </div>
 
-    <section class="section" id="prizes">
-      <h2>The Prize Pool</h2>
-      <p class="sub">6 Lucky Winners will be drawn at the end of the 21-day cycle.</p>
-      <div class="grid-3">
-        <div class="card prize-card">
-          <div class="card-icon">🏆</div>
-          <h3>Grand Prize</h3>
-          <div class="prize-val">$25</div>
-          <p>Digital Gift Card (Amazon, Visa, PayPal, or Apple/Google Play). 6 Winners Total.</p>
+  <!-- How It Works -->
+  <section id="how-it-works">
+    <div class="container">
+      <h2 class="section-title">How StackDeals Works</h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-icon">📧</div>
+          <h3>1. Enter for Free</h3>
+          <p>Sign up with a personal email address and verify it. This instantly grants you your first entry into the active giveaway.</p>
         </div>
-        <div class="card">
-          <div class="card-icon">⚡</div>
-          <h3>Weighted Drawing</h3>
-          <p>Winners are selected using a verified weighted random draw. More points = higher odds.</p>
+        <div class="step-card">
+          <div class="step-icon">🚀</div>
+          <h3>2. Stack Your Entries</h3>
+          <p>Boost your odds by completing fast, 60-second bonus tasks, doing daily check-ins, or referring friends. No purchase is ever required.</p>
         </div>
-        <div class="card">
-          <div class="card-icon">🔒</div>
-          <h3>Anti-Fraud Protected</h3>
-          <p>Bot farms and fake emails are filtered out. Real entrants only, ensuring fair odds for everyone.</p>
+        <div class="step-card">
+          <div class="step-icon">🏆</div>
+          <h3>3. Transparent Draws</h3>
+          <p>When the timer ends, we run a cryptographically secure, weighted random draw. More entries improve your odds, but a cap ensures fairness.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="section section-alt" id="faq">
-      <h2>Frequently Asked Questions</h2>
-      <div class="faq-list" style="max-width:700px;margin:0 auto;">
+  <!-- Ways to Earn -->
+  <section style="background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+    <div class="container">
+      <h2 class="section-title">Ways to Earn Entries</h2>
+      <div class="earn-grid">
+        <div class="earn-card">
+          <div class="earn-icon">✅</div>
+          <div>
+            <h4>Daily Check-In</h4>
+            <p>Come back every day to claim your free daily entries and keep your streak alive.</p>
+            <span class="earn-badge">+5 Entries / Day</span>
+          </div>
+        </div>
+        <div class="earn-card">
+          <div class="earn-icon">🤝</div>
+          <div>
+            <h4>Refer Friends</h4>
+            <p>Share your unique link. You get entries when they join, and a massive bonus when they complete their first task.</p>
+            <span class="earn-badge">+10 on Join · +90 on First Task</span>
+          </div>
+        </div>
+        <div class="earn-card">
+          <div class="earn-icon">⚡</div>
+          <div>
+            <h4>Bonus Tasks (Offerwall)</h4>
+            <p>Complete quick, verified actions like app installs or web signups matched to your device.</p>
+            <span class="earn-badge">+50 to +300 Entries / Task</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Active Giveaways -->
+  <section id="active-giveaways">
+    <div class="container">
+      <h2 class="section-title">Active Giveaways</h2>
+      <div class="giveaways-grid">
+        <!-- Static Placeholder Card (Will be dynamically generated or manually updated per campaign) -->
+        <div class="giveaway-card">
+          <div class="gc-header">
+            <h3>🎁 Holiday Bonus Giveaway</h3>
+          </div>
+          <div class="gc-body">
+            <p>Win one of four $25 Amazon Gift Cards. Enter for free and boost your odds with daily tasks.</p>
+            <div class="gc-footer">
+              <span>4 Winners</span>
+              <a href="/giveaways/holiday-bonus-001" class="btn btn-primary" style="padding: 8px 16px; font-size: 13px;">Enter Now →</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Example of a second card (can be removed or duplicated) -->
+        <div class="giveaway-card" style="opacity: 0.7;">
+          <div class="gc-header" style="background: var(--muted);">
+            <h3>🔒 Upcoming: Tech Gear Drop</h3>
+          </div>
+          <div class="gc-body">
+            <p>Stay tuned. New giveaways launch monthly. Join our email list to get early access notifications.</p>
+            <div class="gc-footer">
+              <span>Coming Soon</span>
+              <button class="btn btn-ghost" style="padding: 8px 16px; font-size: 13px; cursor: not-allowed;" disabled>Notify Me</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="background: var(--card); border-top: 1px solid var(--line);">
+    <div class="container">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+      <div class="faq-list">
         <div class="faq-item">
           <div class="faq-q">Is it really free to enter?</div>
-          <div class="faq-a"><p>Yes. No purchase or offer completion is necessary to enter or win. You can earn entries entirely for free through daily check-ins and watching ad-supported clips.</p></div>
+          <div class="faq-a">Yes, 100% free. You get an entry just for signing up and verifying your email. Bonus tasks and referrals are completely optional ways to increase your odds.</div>
         </div>
         <div class="faq-item">
-          <div class="faq-q">How are winners chosen?</div>
-          <div class="faq-a"><p>Winners are drawn using a cryptographically secure weighted random algorithm. If you have 100 points and the total pool is 1,000 points, you have a 10% chance of winning.</p></div>
+          <div class="faq-q">How does the "weighted draw" work?</div>
+          <div class="faq-a">Each entry you earn acts like a ticket in a hat. If you have 100 entries and someone else has 10, your name is in the hat 10 times more often. However, we enforce a maximum entry cap per person to prevent grinders from monopolizing the draw.</div>
         </div>
         <div class="faq-item">
-          <div class="faq-q">Who is eligible?</div>
-          <div class="faq-a"><p>Legal residents of the US, UK, and Canada who are 18 years of age or older. Void where prohibited by law.</p></div>
+          <div class="faq-q">What are the "Bonus Tasks"?</div>
+          <div class="faq-a">They are short, legitimate actions (like installing a free app or signing up for a newsletter) provided by our advertising partners. They take 60–90 seconds and credit entries to your account automatically upon completion.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">When and how are winners notified?</div>
+          <div class="faq-a">Winners are drawn immediately after the countdown ends. We will contact the email address associated with the winning account within 48 hours to arrange prize delivery.</div>
         </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 
-  <footer class="site-footer">
-    <div class="disc">
-      NO PURCHASE NECESSARY TO ENTER OR WIN. A purchase or offer completion will not increase your chances of winning beyond the free daily/referral entry methods. Open only to legal residents of US/UK/CA, 18+. Void where prohibited. 
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-links">
+        <a href="/contest-rules.html">Official Rules</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+        <a href="mailto:support@getstackdeals.xyz">Contact Support</a>
+      </div>
+      <div class="compliance">
+        <p><strong>No Purchase Necessary.</strong> A purchase will not increase your chances of winning. Void where prohibited by law. StackDeals is not affiliated with, endorsed by, or sponsored by Amazon or any task providers. All trademarks belong to their respective owners.</p>
+        <p style="margin-top: 12px;">&copy; 2026 StackDeals. All rights reserved.</p>
+      </div>
     </div>
-    <div class="legal-links">
-      <a href="/contest-rules.html">Official Rules</a>
-      <a href="/privacy.html">Privacy Policy</a>
-      <a href="/terms.html">Terms of Service</a>
-    </div>
-    <p>&copy; 2026 StackDeals. All rights reserved.</p>
   </footer>
 
-  <script src="/js/app.js" defer></script>
-  <script src="/js/widget.js" defer></script>
+  <!-- Scripts -->
+  <script src="/js/app.js"></script>
 </body>
 </html>
